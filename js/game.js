@@ -27,9 +27,8 @@ Game.viewport = {
 Game.debug = true;
 
 // game instance variables
-var testBranch;
-var testBranch2;
-var testDraft;
+var testLevel;
+var nextChunkStart = Game.height;
 
 // load resources
 Game.loadRes = function() {
@@ -38,18 +37,29 @@ Game.loadRes = function() {
 
 // game initailization logic
 Game.start = function() {
-
   Game.ctx.imageSmoothingEnabled = false;
-  testBranch = createTreeBranch(0, 100, 60, 20, 0, false, 50);
-  testBranch2 = createTreeBranch(300, 300, 180, 30, 1, true, 50);
-  testDraft = createAirDraft(100, 400, 100, 130, Math.random());
+
+  testLevel = createLevel();
+
 }
 
 // game update logic
 Game.update = function() {
 
+  Game.updateChunks();
+
+
   // debug stuff
   if (Game.debug) {
+
+    // move viewport up and down
+    if (Input.keys[38]) {
+      Game.viewport.y -= 5;
+    }
+    if (Input.keys[40]) {
+      Game.viewport.y += 5;
+    }
+
     // start and stop the game
     if (Input.keys[191])
       Game.speed = 0;
@@ -62,7 +72,14 @@ Game.update = function() {
 Game.draw = function() {
   Game.ctx.fillStyle = '#fff';
   Game.ctx.fillRect(0, 0, Game.width, Game.height);
-  testBranch.draw();
-  testBranch2.draw();
-  testDraft.draw();
+
+  testLevel.draw();
+}
+
+Game.updateChunks = function() {
+  // generate a new chunk when camera gets high enough
+  if (Game.viewport.y < nextChunkStart + 100) {
+    testLevel.generateChunk(nextChunkStart);
+    nextChunkStart -= Game.height * 2;
+  }
 }
