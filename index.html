@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Ludum Dare 35</title>
+
+    <!--load scripts here-->
+    <script src='js/game.js'></script>
+    <script src='js/utils.js'></script>
+
+  </head>
+
+  <body bgcolor='#777'>
+    <div id='canvas_wrapper' style='width: 240px; height: 320px; margin: auto;'>
+      <canvas id='game_canvas' width='240' height='320';></canvas>
+    </div>
+
+    <script>
+      // add event listeners for input
+      window.addEventListener('keydown', Input.onKeyDown);
+      window.addEventListener('keyup', Input.onKeyUp);
+
+      // prevents keys from being undefined
+      for (var i = 0; i < Input.keys.length; i++) {
+          Input.keys[i] = false;
+      }
+
+      // get the canvas context
+      Game.ctx = document.getElementById('game_canvas').getContext('2d');
+
+      Game.loadRes();
+      Game.start();
+
+      // start the update loop
+      setInterval(Game.update, 1000 / Game.ups);
+
+      // draw recursively
+      (function draw() {
+        Game.draw();
+        requestAnimationFrame(draw);
+      })();
+    </script>
+  </body>
+
+</html>
