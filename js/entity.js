@@ -45,11 +45,11 @@ function createEntity(x, y, width, height, colliderX, colliderY, colliderWidth, 
   entity.drawBasic = function(fillColor, colliderColor) {
     // draw entity image placeholder
     Game.ctx.fillStyle = fillColor;
-    Game.ctx.fillRect(entity.x, entity.y, entity.width, entity.height);
+    Game.ctx.fillRect(entity.x - Game.viewport.x, entity.y - Game.viewport.y, entity.width, entity.height);
 
     // draw collider
     Game.ctx.strokeStyle = colliderColor;
-    Game.ctx.strokeRect(entity.x + entity.colliderX, entity.y + entity.colliderY,
+    Game.ctx.strokeRect(entity.x + entity.colliderX - Game.viewport.x, entity.y + entity.colliderY - Game.viewport.y,
                       entity.colliderWidth, entity.colliderHeight);
   }
 

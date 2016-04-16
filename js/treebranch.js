@@ -38,12 +38,12 @@ function createTreeBranch(x, y, width, height, side, willFall, leafSize) {
   branch.draw = function() {
     // draw branch
     Game.ctx.fillStyle = branch.willFall ? '#BAA951' : '#654A1B';
-    Game.ctx.fillRect(branch.x, branch.y, branch.width, branch.height);
+    Game.ctx.fillRect(branch.x - Game.viewport.x, branch.y - Game.viewport.y, branch.width, branch.height);
 
     // draw leaves
     Game.ctx.fillStyle = branch.willFall ? '#2FCD39' : '#235726';
     for (var i = 0; i < branch.leaves.length; i += 3) {
-      Game.ctx.fillRect(branch.leaves[i], branch.leaves[i + 1],
+      Game.ctx.fillRect(branch.leaves[i] - Game.viewport.x, branch.leaves[i + 1] - Game.viewport.y,
         branch.leaves[i + 2], branch.leaves[i + 2]);
     }
   }

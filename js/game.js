@@ -48,7 +48,6 @@ Game.start = function() {
 // game update logic
 Game.update = function() {
 
-
   // debug stuff
   if (Game.debug) {
     // start and stop the game
