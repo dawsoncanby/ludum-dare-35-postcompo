@@ -61,7 +61,4 @@ Game.draw = function() {
   Game.ctx.fillStyle = '#fff';
   Game.ctx.fillRect(0, 0, Game.width, Game.height);
 
-  testEntity.drawBasic('#0f0', '#333');
-  testEntity2.drawBasic('#f0f', '#333');
-
 }
