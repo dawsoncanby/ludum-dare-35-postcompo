@@ -26,11 +26,13 @@ Game.viewport = {
 // typing '/' will set Game.speed to 1
 Game.debug = true;
 
+// game instance variables
+var testEntity;
+var testEntity2;
+
 // load resources
 Game.loadRes = function() {
-
   // load textures for the game
-  Game.res.tex1 = Utils.loadImage('res/black.png');
 }
 
 // game initailization logic
@@ -43,15 +45,14 @@ Game.start = function() {
 // game update logic
 Game.update = function() {
 
+
   // debug stuff
   if (Game.debug) {
-
     // start and stop the game
     if (Input.keys[191])
       Game.speed = 0;
     if (Input.keys[220])
       Game.speed = 1;
-
   }
 }
 
@@ -59,5 +60,8 @@ Game.update = function() {
 Game.draw = function() {
   Game.ctx.fillStyle = '#fff';
   Game.ctx.fillRect(0, 0, Game.width, Game.height);
+
+  testEntity.drawBasic('#0f0', '#333');
+  testEntity2.drawBasic('#f0f', '#333');
 
 }
