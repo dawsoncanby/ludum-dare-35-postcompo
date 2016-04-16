@@ -10,8 +10,8 @@ Game.ups = 30;
 Game.speed = 1.0;
 
 // the window size in pixels
-Game.width = 240;
-Game.height = 320;
+Game.width = 480;
+Game.height = 640;
 
 // used as a camera which can be moved around
 // all entities are drawn with respect to the viewport's x and y
