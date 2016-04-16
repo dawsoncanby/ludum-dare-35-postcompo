@@ -27,8 +27,9 @@ Game.viewport = {
 Game.debug = true;
 
 // game instance variables
-var testEntity;
-var testEntity2;
+var testBranch;
+var testBranch2;
+var testDraft;
 
 // load resources
 Game.loadRes = function() {
@@ -39,7 +40,9 @@ Game.loadRes = function() {
 Game.start = function() {
 
   Game.ctx.imageSmoothingEnabled = false;
-
+  testBranch = createTreeBranch(0, 100, 60, 20, 0, false, 50);
+  testBranch2 = createTreeBranch(300, 300, 180, 30, 1, true, 50);
+  testDraft = createAirDraft(100, 400, 100, 130, Math.random());
 }
 
 // game update logic
@@ -60,5 +63,7 @@ Game.update = function() {
 Game.draw = function() {
   Game.ctx.fillStyle = '#fff';
   Game.ctx.fillRect(0, 0, Game.width, Game.height);
-
+  testBranch.draw();
+  testBranch2.draw();
+  testDraft.draw();
 }
