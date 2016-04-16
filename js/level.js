@@ -9,7 +9,11 @@ function createLevel() {
 
   level.maxDistBetweenBranches = 100;
   level.minDistBetweenBranches = 70;
-  level.deadBranchProb = 0.2;
+  level.deadBranchProb = 0.6;
+
+  level.airDraftWidth = 75;
+  level.airDraftHeight = 100;
+  level.airDraftOffset = 30;
 
   // each chunk is two screen heights tall
   level.chunks = new Array();
@@ -32,6 +36,10 @@ function createLevel() {
       // decide whether branch is dead or alive
       var willFall = Math.random() < level.deadBranchProb;
 
+      // if a falling branch is going to be created, also create an airdraft
+      var draft = createAirDraft(Math.random() * (Game.width - level.airDraftWidth), currY - level.airDraftOffset,
+                  level.airDraftWidth, level.airDraftHeight, Math.random() / 3 + .5);
+
       // specify position and dimensions of branch
       var branchWidth = level.avgBranchWidth +
       (Math.random() > .5 ? -1 : 1) * (level.branchWidthVar / 2 + Math.random() * level.branchWidthVar / 2);
@@ -47,6 +55,9 @@ function createLevel() {
 
       // add branch to the chunk
       chunk.push(branch);
+
+      // if falling branch, add a draft
+      if (willFall) chunk.push(draft);
 
       // move currY up
       currY -= level.minDistBetweenBranches + (Math.random() * (level.maxDistBetweenBranches - level.minDistBetweenBranches));
