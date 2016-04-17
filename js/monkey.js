@@ -17,7 +17,7 @@ function createMonkey(x, y, curVelY) {
       monkey.x += monkey.horizMoveSpeed * Game.speed;
     }
 
-    monkey.curVelY += monkey.fallAcc;
+    monkey.curVelY += monkey.fallAcc * Game.speed;
 
     // check to see if on branch
     monkey.onBranch = false;
