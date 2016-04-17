@@ -7,8 +7,8 @@ function createLevel() {
   level.branchHeightVar = 10;
   level.branchLeafSize = 50;
 
-  level.maxDistBetweenBranches = 100;
-  level.minDistBetweenBranches = 70;
+  level.maxDistBetweenBranches = 200;
+  level.minDistBetweenBranches = 100;
   level.deadBranchProb = 0.6;
 
   level.airDraftWidth = 75;
@@ -75,6 +75,14 @@ function createLevel() {
     for (var i = 0; i < level.chunks.length; i++) {
       for (var j = 0; j < level.chunks[i].length; j++) {
         level.chunks[i][j].draw();
+      }
+    }
+  }
+
+  level.update = function() {
+    for (var i = 0; i < level.chunks.length; i++) {
+      for (var j = 0; j < level.chunks[i].length; j++) {
+        level.chunks[i][j].update();
       }
     }
   }

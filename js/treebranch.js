@@ -3,7 +3,7 @@
 // whether or not it will fall if a player grabs it,
 // the max size of a leaf
 function createTreeBranch(x, y, width, height, side, willFall, leafSize) {
-  var branch = createEntity(x, y, width, height, x, y, width, height);
+  var branch = createEntity('tree_branch', x, y, width, height, 0, 0, width, 10); // 10 is height because only top can be grabbed
 
   // 0 for left side, 1 for right side
   branch.side = side;
@@ -13,6 +13,7 @@ function createTreeBranch(x, y, width, height, side, willFall, leafSize) {
   // falling branches will not collide with player
   branch.willFall = willFall;
   branch.falling = false;
+  branch.fallSpeed = 7;
 
   // generate some random leaves
   // the array will be organized [leaf0x, leaf0y, leaf0size, leaf1x, ...]
@@ -33,6 +34,15 @@ function createTreeBranch(x, y, width, height, side, willFall, leafSize) {
     branch.leaves.push(x);
     branch.leaves.push(y);
     branch.leaves.push(size);
+  }
+
+  branch.update = function() {
+    if (branch.falling) {
+      branch.y += branch.fallSpeed;
+      for (var i = 0; i < branch.leaves.length; i += 3) {
+        branch.leaves[i + 1] += branch.fallSpeed;
+      }
+    }
   }
 
   branch.draw = function() {

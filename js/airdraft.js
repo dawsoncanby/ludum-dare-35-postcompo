@@ -1,7 +1,11 @@
 function createAirDraft(x, y, width, height, strength) {
-  var draft = createEntity(x, y, width, height, x, y, width, height);
+  var draft = createEntity('air_draft', x, y, width, height, 0, 0, width, height);
 
   draft.strength = strength;
+
+  draft.update = function() {
+    
+  }
 
   draft.draw = function() {
     // amount of color = strength

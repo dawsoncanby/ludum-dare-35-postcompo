@@ -22,13 +22,17 @@ Game.viewport = {
 
 // when set to true:
 // colliders will be drawn
-// typing '\' will set Game.speed to 0
-// typing '/' will set Game.speed to 1
+// typing '\' will decrease speed
+// typing '/' will increase speed
 Game.debug = true;
 
 // game instance variables
 var testLevel;
 var nextChunkStart = Game.height;
+
+var player;
+var isMonkey;
+var swapKeyHeldLastFrame = false;
 
 // load resources
 Game.loadRes = function() {
@@ -36,18 +40,45 @@ Game.loadRes = function() {
 }
 
 // game initailization logic
-Game.start = function() {
+Game.start = function() {  
   Game.ctx.imageSmoothingEnabled = false;
 
   testLevel = createLevel();
+  insMonkey = true;
+  player = createMonkey(Game.width / 2, Game.height / 2, 0);
 
 }
 
 // game update logic
 Game.update = function() {
 
+  testLevel.update();
   Game.updateChunks();
 
+  player.move(testLevel, Input.keys[65], Input.keys[68], Input.keys[87]);
+
+  // follow player with camera
+  Game.viewport.y -= (Game.viewport.y - player.y) / 2;
+  Game.viewport.y -= Game.height / 4;
+
+  // swap between monkey and bird
+  if (Input.keys[32] && !swapKeyHeldLastFrame) {
+    if (isMonkey) {
+      player = createBird(player.x, player.y, player.curVelY);
+    }
+    else {
+      player = createMonkey(player.x, player.y, player.curVelY);
+    }
+    isMonkey = !isMonkey;
+  }
+
+  // prevent double swapping if key is held
+  if (Input.keys[32]) {
+    swapKeyHeldLastFrame = true;
+  }
+  else {
+    swapKeyHeldLastFrame = false;
+  }
 
   // debug stuff
   if (Game.debug) {
@@ -62,9 +93,9 @@ Game.update = function() {
 
     // start and stop the game
     if (Input.keys[191])
-      Game.speed = 0;
+      Game.speed -= .01;
     if (Input.keys[220])
-      Game.speed = 1;
+      Game.speed += 1;
   }
 }
 
@@ -74,11 +105,13 @@ Game.draw = function() {
   Game.ctx.fillRect(0, 0, Game.width, Game.height);
 
   testLevel.draw();
+
+  player.draw();
 }
 
 Game.updateChunks = function() {
-  // generate a new chunk when camera gets high enough
-  if (Game.viewport.y < nextChunkStart + 100) {
+  // generate a new chunk when player gets high enough
+  if (player.y < nextChunkStart + 200) {
     testLevel.generateChunk(nextChunkStart);
     nextChunkStart -= Game.height * 2;
   }
