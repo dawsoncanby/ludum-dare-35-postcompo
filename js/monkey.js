@@ -66,7 +66,7 @@ function createMonkey(x, y, curVelY) {
 
   monkey.draw = function() {
     Game.ctx.fillStyle = '#ff0';
-    Game.ctx.fillRect(monkey.x - 10 - Game.viewport.x, monkey.y - Game.viewport.y, 20, 30); // draw from monkeys head
+    Game.ctx.drawImage(Game.res.monkey, monkey.x - 10 - Game.viewport.x, monkey.y - Game.viewport.y, 40, 60); // draw from monkeys head
   }
 
   return monkey;

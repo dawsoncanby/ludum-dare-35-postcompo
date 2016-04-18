@@ -24,7 +24,7 @@ Game.viewport = {
 // colliders will be drawn
 // typing '\' will decrease speed
 // typing '/' will increase speed
-Game.debug = true;
+Game.debug = false;
 
 // game instance variables
 var testLevel;
@@ -42,6 +42,22 @@ var showingStartScreen = true;
 // load resources
 Game.loadRes = function() {
   // load textures for the game
+  Game.res.backgroundImg = Game.loadImage('res/background.png');
+  Game.res.airdraft = Game.loadImage('res/airdraft.png');
+  Game.res.bird = Game.loadImage('res/bird.png');
+  Game.res.monkey = Game.loadImage('res/monkey.png');
+  Game.res.treeleftdead = Game.loadImage('res/tree_left_dead.png');
+  Game.res.treeleft = Game.loadImage('res/tree_left.png');
+  Game.res.treerightdead = Game.loadImage('res/tree_right_dead.png');
+  Game.res.treeright = Game.loadImage('res/tree_right.png');
+
+}
+
+Game.loadImage = function(src) {
+  var img = new Image();
+  img.src = src;
+  return img;
+
 }
 
 // game initailization logic
@@ -139,7 +155,7 @@ Game.update = function() {
 // draw to screen
 Game.draw = function() {
   Game.ctx.fillStyle = '#fff';
-  Game.ctx.fillRect(0, 0, Game.width, Game.height);
+  Game.ctx.drawImage(Game.res.backgroundImg, 0, 0);
 
   testLevel.draw();
 

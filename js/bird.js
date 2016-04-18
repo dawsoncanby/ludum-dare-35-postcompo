@@ -36,7 +36,7 @@ function createBird(x, y, curVelY) {
 
   bird.draw = function() {
     Game.ctx.fillStyle = '#0ff';
-    Game.ctx.fillRect(bird.x - 10 - Game.viewport.x, bird.y - 3 - Game.viewport.y, 20, 6);
+    Game.ctx.drawImage(Game.res.bird, bird.x - 10 - Game.viewport.x, bird.y - 3 - Game.viewport.y, 40, 60);
   }
 
   return bird;

@@ -48,14 +48,27 @@ function createTreeBranch(x, y, width, height, side, willFall, leafSize) {
   branch.draw = function() {
     // draw branch
     Game.ctx.fillStyle = branch.willFall ? '#BAA951' : '#654A1B';
-    Game.ctx.fillRect(branch.x - Game.viewport.x, branch.y - Game.viewport.y, branch.width, branch.height);
+    var branchImg;
 
-    // draw leaves
-    Game.ctx.fillStyle = branch.willFall ? '#2FCD39' : '#235726';
-    for (var i = 0; i < branch.leaves.length; i += 3) {
-      Game.ctx.fillRect(branch.leaves[i] - Game.viewport.x, branch.leaves[i + 1] - Game.viewport.y,
-        branch.leaves[i + 2], branch.leaves[i + 2]);
+    if (branch.willFall) {
+      if (branch.side == 0) {
+        branchImg = Game.res.treeleftdead;
+      }
+      else {
+        branchImg = Game.res.treerightdead;
+      }
     }
+    else {
+      if (branch.side == 0) {
+        branchImg = Game.res.treeleft;
+      }
+      else {
+        branchImg = Game.res.treeright;
+      }
+    }
+    console.log(branchImg);
+    Game.ctx.drawImage(branchImg, branch.x - Game.viewport.x, branch.y - Game.viewport.y, branch.width, branch.height);
+
   }
 
   return branch;
