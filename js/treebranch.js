@@ -66,7 +66,6 @@ function createTreeBranch(x, y, width, height, side, willFall, leafSize) {
         branchImg = Game.res.treeright;
       }
     }
-    console.log(branchImg);
     Game.ctx.drawImage(branchImg, branch.x - Game.viewport.x, branch.y - Game.viewport.y, branch.width, branch.height);
 
   }
