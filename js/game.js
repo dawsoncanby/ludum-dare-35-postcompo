@@ -82,23 +82,32 @@ Game.start = function() {
 Game.update = function() {
   Input.onGamepadUpdate();
 
-  // move speed for player
-  var xSpeed = Utils.applyDeadzone(Input.gamePad.axes[0], 0.25);
-  var moveLeft = xSpeed < 0 || Input.keys[65];
-  var moveRight = xSpeed > 0 || Input.keys[68];
+  var moveLeft = Input.keys[65];
+  var moveRight = Input.keys[68];
+  var jump = Input.keys[87];
+  var swap = Input.keys[32];
+  var enter = Input.keys[13];
+  if (Input.gamePad != undefined) {
+    // move speed for player
+    var xSpeed = Utils.applyDeadzone(Input.gamePad.axes[0], 0.25);
+    moveLeft = xSpeed < 0;
+    moveRight = xSpeed > 0;
 
-  // jump if monkey
-  var jump = Input.gamePad.buttons[1].pressed || Input.keys[87];
+    // jump if monkey
+    jump = Input.gamePad.buttons[1].pressed;
 
-  // swap between characters
-  var swap = Input.gamePad.buttons[0].pressed || Input.keys[32];
+    // swap between characters
+    swap = Input.gamePad.buttons[0].pressed;
 
-  console.log("Swap: " + swap + "\nJump: " + jump + "\nxSpeed: " + xSpeed);
+    enter = Input.gamePad.buttons[9].pressed;
+  }
 
+    console.log("Swap: " + swap + "\nJump: " + jump + "\nxSpeed: " + xSpeed);
+}
 
   if (showingStartScreen) {
     Game.speed = 0;
-    if (Input.keys[13] || Input.gamePad.buttons[9].pressed) {
+    if (enter) {
       showingStartScreen = false;
       Game.speed = 1;
     }
@@ -142,7 +151,7 @@ Game.update = function() {
   // check for loss
   if (player.y > lavaHeight) {
       Game.speed = 0;
-      if (Input.keys[13] || Input.gamePad.buttons[9].pressed) {
+      if (enter) {
         Game.start();
       }
   }
