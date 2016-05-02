@@ -1,5 +1,6 @@
 var Input = {
   keys: new Array(222),
+  gamePad: new Object(),
 
   onKeyDown: function(e) {
     var code = e.keyCode;
@@ -17,6 +18,10 @@ var Input = {
         Input.keys[i] = false;
       }
     }
+  },
+
+  onGamepadUpdate: function() {
+    Input.gamePad = navigator.getGamepads()[0];
   }
 };
 
@@ -37,6 +42,16 @@ var Utils = {
       var img = new Image();
       img.src = src;
       return img;
+    },
+
+    // controller dead zone
+    applyDeadzone: function(number, threshold){
+       percentage = (Math.abs(number) - threshold) / (1 - threshold);
+
+       if(percentage < 0)
+          percentage = 0;
+
+       return percentage * (number > 0 ? 1 : -1);
     }
 
 };

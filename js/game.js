@@ -80,10 +80,25 @@ Game.start = function() {
 
 // game update logic
 Game.update = function() {
+  Input.onGamepadUpdate();
+
+  // move speed for player
+  var xSpeed = Utils.applyDeadzone(Input.gamePad.axes[0], 0.25);
+  var moveLeft = xSpeed < 0 || Input.keys[65];
+  var moveRight = xSpeed > 0 || Input.keys[68];
+
+  // jump if monkey
+  var jump = Input.gamePad.buttons[1].pressed || Input.keys[87];
+
+  // swap between characters
+  var swap = Input.gamePad.buttons[0].pressed || Input.keys[32];
+
+  console.log("Swap: " + swap + "\nJump: " + jump + "\nxSpeed: " + xSpeed);
+
 
   if (showingStartScreen) {
     Game.speed = 0;
-    if (Input.keys[13]) {
+    if (Input.keys[13] || Input.gamePad.buttons[9].pressed) {
       showingStartScreen = false;
       Game.speed = 1;
     }
@@ -92,7 +107,7 @@ Game.update = function() {
   testLevel.update();
   Game.updateChunks();
 
-  player.move(testLevel, Input.keys[65], Input.keys[68], Input.keys[87]);
+  player.move(testLevel, moveLeft, moveRight, jump);
 
   score = Game.height / 2 - player.y;
   if (score < 0) score = 0;
@@ -106,7 +121,7 @@ Game.update = function() {
   Game.viewport.y -= Game.height / 4;
 
   // swap between monkey and bird
-  if (Input.keys[32] && !swapKeyHeldLastFrame) {
+  if (swap && !swapKeyHeldLastFrame) {
     if (isMonkey) {
       player = createBird(player.x, player.y, player.curVelY);
     }
@@ -117,7 +132,7 @@ Game.update = function() {
   }
 
   // prevent double swapping if key is held
-  if (Input.keys[32]) {
+  if (swap) {
     swapKeyHeldLastFrame = true;
   }
   else {
@@ -127,7 +142,7 @@ Game.update = function() {
   // check for loss
   if (player.y > lavaHeight) {
       Game.speed = 0;
-      if (Input.keys[13]) {
+      if (Input.keys[13] || Input.gamePad.buttons[9].pressed) {
         Game.start();
       }
   }
