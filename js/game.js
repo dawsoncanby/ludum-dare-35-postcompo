@@ -102,8 +102,7 @@ Game.update = function() {
     enter = Input.gamePad.buttons[9].pressed;
   }
 
-    console.log("Swap: " + swap + "\nJump: " + jump + "\nxSpeed: " + xSpeed);
-}
+  console.log("Swap: " + swap + "\nJump: " + jump + "\nxSpeed: " + xSpeed);
 
   if (showingStartScreen) {
     Game.speed = 0;
