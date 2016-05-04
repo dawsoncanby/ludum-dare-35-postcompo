@@ -4,7 +4,11 @@ function createSpider(branch) {
   spider.yOffset = -32;
   spider.x = branch.x + 5;
   spider.y = branch.y + spider.yOffset;
-  spider.moveVel = Math.random() > .5 ? 1 : -1;
+  spider.maxSpeed = 3;
+  spider.minSpeed = 1;
+  spider.moveVel = Math.random() * spider.maxSpeed + spider.minSpeed;
+  spider.moveVel *= Math.random() > 0.5 ? 1 : -1;
+
 
   spider.move = function() {
     if (spider.x < branch.x || spider.x > branch.x + branch.width) {
