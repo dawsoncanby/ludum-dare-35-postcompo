@@ -150,6 +150,11 @@ Game.update = function() {
     swapKeyHeldLastFrame = false;
   }
 
+  // lava rubberbanding
+  if (lavaHeight - Game.player.y > Game.height / 2) {
+    lavaHeight = Game.player.y + Game.height / 2;
+  }
+
   // check for loss
   if (Game.player.y > lavaHeight) {
       Game.alive = false;
