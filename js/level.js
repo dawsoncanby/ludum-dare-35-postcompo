@@ -7,12 +7,12 @@ function createLevel() {
   level.branchHeightVar = 10;
   level.branchLeafSize = 50;
 
-  level.maxDistBetweenBranches = 200;
-  level.minDistBetweenBranches = 100;
-  level.deadBranchProb = 0.6;
+  level.maxDistBetweenBranches = 125;
+  level.minDistBetweenBranches = 75;
+  level.deadBranchProb = 0.2;
 
   level.airDraftWidth = 75;
-  level.airDraftHeight = 100;
+  level.airDraftHeight = 150;
   level.airDraftOffset = 30;
 
   // each chunk is two screen heights tall

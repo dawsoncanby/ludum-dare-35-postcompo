@@ -30,7 +30,7 @@ Game.debug = false;
 var testLevel;
 var nextChunkStart;
 var lavaHeight;
-var lavaRiseSpeed = 5;
+var lavaRiseSpeed = 6;
 
 var player;
 var isMonkey;
