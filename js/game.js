@@ -32,10 +32,11 @@ var nextChunkStart;
 var lavaHeight;
 var lavaRiseSpeed = 6;
 
-var player;
+Game.player = new Object();
 var isMonkey;
 var swapKeyHeldLastFrame;
 var score;
+Game.alive = false;
 
 var showingStartScreen = true;
 
@@ -50,6 +51,7 @@ Game.loadRes = function() {
   Game.res.treeleft = Game.loadImage('res/tree_left.png');
   Game.res.treerightdead = Game.loadImage('res/tree_right_dead.png');
   Game.res.treeright = Game.loadImage('res/tree_right.png');
+  Game.res.spider = Game.loadImage('res/spider.png');
 
 }
 
@@ -67,14 +69,15 @@ Game.start = function() {
   Game.speed = 1;
   testLevel = createLevel();
   insMonkey = true;
-  player = createMonkey(Game.width / 2, Game.height / 2, 0);
+  Game.player = createMonkey(Game.width / 2, Game.height / 2, 0);
   lavaHeight = Game.height;
   nextChunkStart = Game.height;
   swapKeyHeldLastFrame = false;
   score = 0;
+  Game.alive = true;
   Game.updateChunks();
   // spawn a tree for monkey to stand on
-  testLevel.chunks[0].push(createTreeBranch(0, player.y, Game.width, 30, 0, false, 40));
+  testLevel.chunks[0].push(createTreeBranch(0, Game.player.y, Game.width, 30, 0, false, 40));
 
 }
 
@@ -115,26 +118,26 @@ Game.update = function() {
   testLevel.update();
   Game.updateChunks();
 
-  player.move(testLevel, moveLeft, moveRight, jump);
+  Game.player.move(testLevel, moveLeft, moveRight, jump);
 
-  score = Game.height / 2 - player.y;
+  score = Game.height / 2 - Game.player.y;
   if (score < 0) score = 0;
 
   // force player to stay in screen
-  if (player.x > Game.width) player.x = 1;
-  if (player.x < 0) player.x = Game.width - 1;
+  if (Game.player.x > Game.width) Game.player.x = 1;
+  if (Game.player.x < 0) Game.player.x = Game.width - 1;
 
   // follow player with camera
-  Game.viewport.y -= (Game.viewport.y - player.y) / 2;
+  Game.viewport.y -= (Game.viewport.y - Game.player.y) / 2;
   Game.viewport.y -= Game.height / 4;
 
   // swap between monkey and bird
   if (swap && !swapKeyHeldLastFrame) {
     if (isMonkey) {
-      player = createBird(player.x, player.y, player.curVelY);
+      Game.player = createBird(Game.player.x, Game.player.y, Game.player.curVelY);
     }
     else {
-      player = createMonkey(player.x, player.y, player.curVelY);
+      Game.player = createMonkey(Game.player.x, Game.player.y, Game.player.curVelY);
     }
     isMonkey = !isMonkey;
   }
@@ -148,11 +151,15 @@ Game.update = function() {
   }
 
   // check for loss
-  if (player.y > lavaHeight) {
-      Game.speed = 0;
-      if (enter) {
-        Game.start();
-      }
+  if (Game.player.y > lavaHeight) {
+      Game.alive = false;
+  }
+
+  if (!Game.alive) {
+    Game.speed = 0;
+    if (enter) {
+      Game.start();
+    }
   }
   lavaHeight -= lavaRiseSpeed * Game.speed;
 
@@ -182,7 +189,7 @@ Game.draw = function() {
 
   testLevel.draw();
 
-  player.draw();
+  Game.player.draw();
 
   // draw lava
   Game.ctx.fillStyle = '#f00';
@@ -193,7 +200,7 @@ Game.draw = function() {
   Game.ctx.fillText("Score: " + Math.floor(score), 10, 30);
 
   // check for loss
-  if (player.y > lavaHeight) {
+  if (!Game.alive) {
       Game.ctx.fillText("You died! Press enter to retry", 100, 100);
   }
 
@@ -203,8 +210,8 @@ Game.draw = function() {
 }
 
 Game.updateChunks = function() {
-  // generate a new chunk when player gets high enough
-  if (player.y < nextChunkStart + 500) {
+  // generate a new chunk when Game.player gets high enough
+  if (Game.player.y < nextChunkStart + 500) {
     testLevel.generateChunk(nextChunkStart);
     nextChunkStart -= Game.height * 2;
   }

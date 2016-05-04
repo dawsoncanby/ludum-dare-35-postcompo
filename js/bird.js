@@ -2,7 +2,7 @@ function createBird(x, y, curVelY) {
   var bird = new Object();
 
   bird.x = x;
-  bird.y =y;
+  bird.y = y;
   bird.curVelY = curVelY;
   bird.fallAcc = 0.3;
   bird.horizMoveSpeed = 4;

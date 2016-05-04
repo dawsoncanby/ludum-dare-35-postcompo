@@ -10,6 +10,7 @@ function createLevel() {
   level.maxDistBetweenBranches = 125;
   level.minDistBetweenBranches = 75;
   level.deadBranchProb = 0.2;
+  level.spiderSpawnProb = 0.3;
 
   level.airDraftWidth = 75;
   level.airDraftHeight = 150;
@@ -23,7 +24,7 @@ function createLevel() {
   // yStart tells the generator how far up to start generating
   level.generateChunk = function(yStart) {
 
-    // array holding the spawned trees and airdrafts
+    // array holding the spawned trees, spiders and airdrafts
     var chunk = new Array();
 
     // holds where the last tree was spawned
@@ -58,6 +59,8 @@ function createLevel() {
 
       // if falling branch, add a draft
       if (willFall) chunk.push(draft);
+      // otherwise, check to add a spider
+      else if (level.spiderSpawnProb > Math.random()) chunk.push(createSpider(branch));
 
       // move currY up
       currY -= level.minDistBetweenBranches + (Math.random() * (level.maxDistBetweenBranches - level.minDistBetweenBranches));
@@ -83,6 +86,7 @@ function createLevel() {
     for (var i = 0; i < level.chunks.length; i++) {
       for (var j = 0; j < level.chunks[i].length; j++) {
         level.chunks[i][j].update();
+
       }
     }
   }
