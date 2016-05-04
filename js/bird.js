@@ -6,7 +6,7 @@ function createBird(x, y, curVelY) {
   bird.curVelY = curVelY;
   bird.fallAcc = 0.3;
   bird.horizMoveSpeed = 4;
-  bird.draftBoostSpeed = 3;
+  bird.draftBoostSpeed = 5;
   bird.maxVertSpeed = 10;
 
   bird.move = function(level, left, right) {
