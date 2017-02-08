@@ -30,7 +30,7 @@ Game.debug = false;
 var testLevel;
 var nextChunkStart;
 var lavaHeight;
-var lavaRiseSpeed = 6;
+var lavaRiseSpeed = 5;
 
 Game.player = new Object();
 var isMonkey;
@@ -83,7 +83,7 @@ Game.start = function() {
 
 // game update logic
 Game.update = function() {
-  Input.onGamepadUpdate();
+   .onGamepadUpdate();
 
   var moveLeft = Input.keys[65];
   var moveRight = Input.keys[68];
@@ -95,6 +95,8 @@ Game.update = function() {
     var xSpeed = Utils.applyDeadzone(Input.gamePad.axes[0], 0.25);
     moveLeft = xSpeed < 0;
     moveRight = xSpeed > 0;
+
+    console.log(Input.gamePad.buttons);
 
     // jump if monkey
     jump = Input.gamePad.buttons[1].pressed;
