@@ -83,7 +83,7 @@ Game.start = function() {
 
 // game update logic
 Game.update = function() {
-   .onGamepadUpdate();
+  onGamepadUpdate();
 
   var moveLeft = Input.keys[65];
   var moveRight = Input.keys[68];
