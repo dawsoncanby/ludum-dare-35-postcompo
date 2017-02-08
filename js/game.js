@@ -99,7 +99,7 @@ Game.update = function() {
     console.log(Input.gamePad.buttons);
 
     // jump if monkey
-    jump = Input.gamePad.buttons[1].pressed;
+    jump = Input.gamePad.buttons[7].pressed;
 
     // swap between characters
     swap = Input.gamePad.buttons[0].pressed;
