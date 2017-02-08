@@ -83,7 +83,7 @@ Game.start = function() {
 
 // game update logic
 Game.update = function() {
-  onGamepadUpdate();
+  Input.onGamepadUpdate();
 
   var moveLeft = Input.keys[65];
   var moveRight = Input.keys[68];
@@ -96,13 +96,11 @@ Game.update = function() {
     moveLeft = xSpeed < 0;
     moveRight = xSpeed > 0;
 
-    console.log(Input.gamePad.buttons);
-
     // jump if monkey
-    jump = Input.gamePad.buttons[7].pressed;
+    jump = Input.gamePad.buttons[0].pressed;
 
     // swap between characters
-    swap = Input.gamePad.buttons[0].pressed;
+    swap = Input.gamePad.buttons[3].pressed;
 
     enter = Input.gamePad.buttons[9].pressed;
   }
